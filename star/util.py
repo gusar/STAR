@@ -5,7 +5,7 @@ from glob import glob
 def list_files_by_ext_sorted(dir_path, ext, postfix=None):
     search_list = ['*', ext, postfix] if postfix else ['*', ext]
     return sorted(glob(os.path.join(dir_path, '.'.join(search_list))))
- 
+
 
 def safe_create_path(path):
     try:
@@ -15,23 +15,21 @@ def safe_create_path(path):
     return path
 
 
-def flatten_json(list_or_dict):
+def flatten_json(dict_or_list):
+    result_dict = {}
 
     def flatten(json_obj, name=''):
-    	obj_type = type(json_obj)
-    	
-        if obj_type is dict:
-        	map(lambda x: flatten(json_obj[x], name + x + '_'), json_obj)
-                
-        elif obj_type is list:
-            map(lambda x, i: flatten(x, name + str(i) + '_'), json_obj, len(json_obj))
-                
+        if type(json_obj) is dict:
+            [flatten(json_obj[a], name + a + '_') for a in json_obj]
+        elif type(json_obj) is list:
+            [flatten(a, name + str(i) + '_') for a, i in zip(json_obj, range(len(json_obj)))]
         else:
             try:
-                str_obj = str(json_obj)
+                a = json_obj
             except:
-                str_obj = json_obj.encode('ascii', 'ignore').decode('ascii')
-            
-            out[str(name[:-1])] = str_obj
+                a = json_obj.encode('ascii', 'ignore').decode('ascii')
 
-    return flatten(list_or_dict)
+            result_dict[name[:-1]] = a
+
+    flatten(dict_or_list)
+    return result_dict

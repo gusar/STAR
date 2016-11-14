@@ -1,6 +1,6 @@
 import unittest
 
-from star.util import flatten_json
+from star.utils import flatten_json
 
 
 class TestFlattenJson(unittest.TestCase):

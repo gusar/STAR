@@ -1,6 +1,6 @@
 import logging
-import star.load_json_data
-import star
+
+from star import repo
 
 
 def setup_logger():
@@ -9,17 +9,17 @@ def setup_logger():
     logging.info('Begin')
 
 
-def load_stocktwits_data(path):
-    return star.load_json_data.load_stocktwits_df(path)
+def load_stocktwits_data():
+    loader = repo.load_stocktwits_files()
+    df = loader.next()
+    return
 
 
 def main():
     setup_logger()
 
-    star.split_stocktwits_files()
-
-    # sw_df = load_stocktwits_data(parts_path)
-
+    # star.split_stocktwits_files()
+    sw_loader = load_stocktwits_data()
     logging.info('End')
 
 

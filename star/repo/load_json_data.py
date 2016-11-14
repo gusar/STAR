@@ -1,23 +1,37 @@
 import gzip
 import json
-import pandas as pd
-import smart_open as so
-from flatten_json import flatten_json
 import logging
 
-from util import list_files_by_ext_sorted
+import pandas as pd
+import smart_open as so
+
+from star import utils
+
+
+def get_args():
+    arg_parser = utils.ArgParser()
+    arg_parser.add_partitioned_repo(True)
+    return arg_parser.parse()
+
+
+def load_stocktwits_files():
+    args = get_args()
+    logging.info('Partitioned repo: ' + args.partitioned_repo)
+
+    sw_repo = StockTwitsLoader(args.partitioned_repo)
+    return sw_repo.loader
 
 
 class StockTwitsLoader:
-
     def __init__(self, repo_path):
         self.repo_path = repo_path
-        self.file_list = list_files_by_ext_sorted(repo_path)
+        self.file_list = utils.list_files_by_ext_sorted(repo_path, 'json', 'gz')
 
     def load_stocktwits_df(self, json_file_path):
         logging.info('Reading file: ' + json_file_path)
         stocktwits_json_list = self._json_file_to_str_list(json_file_path)
         df = self._json_str_list_to_dataframe(stocktwits_json_list)
+        df.to_csv("/home/andy/" + json_file_path.split('.')[-4:-2] + ".csv")
         logging.info(str(df.shape))
         return df
 
@@ -38,9 +52,11 @@ class StockTwitsLoader:
 
     @staticmethod
     def _json_str_list_to_dataframe(json_str_list):
-        dataframe_row_list = [pd.DataFrame(flatten_json(json.loads(json_str)), index=[0])
-                              for json_str in json_str_list]
+        dataframe_row_list = [pd.io.json.json_normalize(json.loads(json_str)) for json_str in json_str_list]
+        print('done')
         return pd.concat(dataframe_row_list)
+
+
 
     @staticmethod
     def _read_from_archive(file_path):

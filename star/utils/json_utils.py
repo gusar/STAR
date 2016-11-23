@@ -21,3 +21,7 @@ def flatten_json(dict_or_list):
 def clean_json(json_obj):
     return dict(map(lambda (x, y): (x, y) if y is not None else (x, "None"),
                     json_obj.iteritems()))
+
+
+def filter_by_columns(json_dict):
+    return

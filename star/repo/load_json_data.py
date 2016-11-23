@@ -3,12 +3,9 @@ import json
 import logging
 
 import pandas as pd
-import numpy as np
-import pymongo as pm
 import smart_open as so
 from pandas.io import json as pjson
 
-from star.config import json_data_columns
 from star import utils
 
 
@@ -26,23 +23,13 @@ def load_stocktwits_files():
     return sw_repo.loader
 
 
-def stage_stocktwits_files():
-    args = get_args()
-    logging.info('Partitioned repo: ' + args.partitioned_repo)
-
-    sw_repo = StockTwitsManager(args.partitioned_repo)
-    stager = sw_repo.stager
-    stager.next()
-    return
-
-
 class StockTwitsManager:
     def __init__(self, repo_path):
         self.repo_path = repo_path
         self.file_list = utils.list_files_by_ext_sorted(repo_path, 'json', 'gz')
         self.db_collection = None
 
-    def stage_stocktwits_file(self, json_file_path):
+    def load_stocktwits_list(self, json_file_path):
         logging.info('Reading file: ' + json_file_path)
         stocktwits_json_list = self._json_file_to_str_list(json_file_path)
         tweets_list = self._normalize_json_str_list(stocktwits_json_list)
@@ -53,9 +40,7 @@ class StockTwitsManager:
         logging.info('Reading file: ' + json_file_path)
         stocktwits_json_list = self._json_file_to_str_list(json_file_path)
         df = self._json_str_list_to_dataframe(stocktwits_json_list)
-        # todo: Test code loads into CSV
-        df.to_csv("/home/andy/" + json_file_path.split('/')[-1] + ".csv", encoding='utf-8')
-        # end test code
+        # df.to_csv("/home/andy/" + json_file_path.split('/')[-1] + ".csv", encoding='utf-8')
         logging.info(str(df.shape))
         return df
 
@@ -71,7 +56,7 @@ class StockTwitsManager:
 
     def _stocktwits_stager_generator(self):
         for sw_file in self.file_list:
-            yield self.stage_stocktwits_file(sw_file)
+            yield self.load_stocktwits_list(sw_file)
 
     @property
     def loader(self):

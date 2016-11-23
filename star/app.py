@@ -1,14 +1,9 @@
 import logging
+import pandas as pd
 
 from star import repo
-import pandas as pd
+from star import log
 from repo import load_json_data
-
-
-def setup_logger():
-    logging.basicConfig(format='%(asctime)s | %(levelname)s | %(module)s:%(lineno)d | %(message)s',
-                        level=logging.DEBUG)
-    logging.info('Begin')
 
 
 def load_stocktwits_data():
@@ -23,7 +18,7 @@ def stage_stocktwits_data():
 
 
 def main():
-    setup_logger()
+    log.setup_logger()
     pd.set_option('display.width', 1000)
     pd.set_option('display.expand_frame_repr', True)
     pd.set_option('display.max_colwidth', 1500)

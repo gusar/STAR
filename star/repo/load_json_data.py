@@ -7,6 +7,7 @@ import smart_open as so
 from pandas.io import json as pjson
 
 from star import utils
+from star.config import json_data_columns
 
 
 def get_args():
@@ -78,7 +79,8 @@ class StockTwitsManager:
         def json_to_norm_dict(s, c):
             logging.info(str(c))
             normalized_dict = pjson.nested_to_record(json.loads(s))
-            return {key.replace('.', '_'): value for key, value in normalized_dict.iteritems()}
+            return {key.replace('.', '_'): value for key, value in normalized_dict.iteritems()
+                    if key in json_data_columns.WANTED_COLUMNS}
 
         return [json_to_norm_dict(json_str, count)
                 for json_str, count in zip(json_str_list, range(len(json_str_list)))]

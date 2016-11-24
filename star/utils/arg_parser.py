@@ -26,3 +26,18 @@ class ArgParser:
                                       required=is_required,
                                       type=int,
                                       help='Number of lines per file')
+
+    def add_mongo_uri(self, is_required=False):
+        self._arg_parser.add_argument('-mu', '--mongo_uri',
+                                      is_required=is_required,
+                                      help='Connection URI for MongoDB')
+
+    def add_db_name(self, is_required=False):
+        self._arg_parser.add_argument('-db', '--db_name',
+                                      is_required=is_required,
+                                      help='Database name')
+
+    def add_collection_name(self, is_required=False):
+        self._arg_parser.add_argument('-col', '--collection_name',
+                                      is_required=is_required,
+                                      help='MongoDB collection name')

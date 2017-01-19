@@ -1,5 +1,8 @@
 # Config file for automatic testing at travis-ci.org
 # This file will be regenerated if you run travis_pypi_setup.py
+branches:
+  only:
+    - master
 
 language: python
 python: 3.5
@@ -14,6 +17,15 @@ install: pip install -U tox
 
 # command to run tests, e.g. python setup.py test
 script: tox -e ${TOXENV}
+
+notifications: # set notification options
+  email:
+    recipients:
+      - andy.lahs@gmail.com
+
+    # change is when the repo status goes from pass to fail or vice versa
+    on_success: change
+    on_failure: always
 
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup

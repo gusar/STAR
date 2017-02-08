@@ -9,7 +9,7 @@ class Mongo:
         self.collection = None
 
     def set_db(self, db_name):
-        self.db = self.client[db_name]   
+        self.db = self.client[db_name]
 
     def set_collection(self, collection_name):
         if self.db is not None:

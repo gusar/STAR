@@ -1,4 +1,4 @@
-import yaml
+import ruamel_yaml as yaml
 
 from star.utils.exceptions import NoneString
 

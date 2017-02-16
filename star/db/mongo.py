@@ -1,28 +1,44 @@
 import pymongo as pm
 
 
-class Mongo:
+class Mongo(object):
 
-    def __init__(self, mongodb_uri=None):
+    def __init__(self, mongodb_uri=None, db_name=None, collection=None):
         self.client = pm.MongoClient(mongodb_uri, connect=True)
-        self.db = None
-        self.collection = None
+
+        self._db = None if db_name is None else self.set_db(db_name)
+        self._collection = None if collection is None else self.set_collection(collection)
 
     def set_db(self, db_name):
-        self.db = self.client[db_name]
+        self._db = self.client[db_name]
 
     def set_collection(self, collection_name):
-        if self.db is not None:
-            self.collection = self.db[collection_name]
+        if self._db is not None:
+            self._collection = self._db[collection_name]
         else:
             raise MongoException("Database not defined")
 
     def insert(self, data):
-        if self.collection:
-            self.collection.insert(data)
+        if self._collection:
+            self._collection.insert(data)
         else:
-            raise MongoException("Collection not defined")
+            raise MongoNoneCollection
+
+    def find(self):
+        if self._collection:
+            pass
+        else:
+            raise MongoNoneCollection
+
+    @property
+    def get_db(self):
+        return self._db
+
+    @property
+    def get_collection(self):
+        return self._collection
 
 
-class MongoException(Exception):
-    pass
+class MongoNoneCollection(Exception):
+    def __init__(self):
+        self.message = 'Collection not defined'

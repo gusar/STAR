@@ -28,6 +28,10 @@ class StarConfig(object):
             'yaml': self.parse_yaml_config
         }
 
+    @property
+    def config(self):
+        return self.parse() if self.parsed_content is None else self.parsed_content
+
     def parse_yaml_config(self):
         with open(self._path, 'r') as stream:
             try:

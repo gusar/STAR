@@ -11,6 +11,11 @@ class ArgParser:
             return known_args, unknown_args
         return known_args
 
+    def add_config_path(self, is_required=False):
+        self._arg_parser.add_argument('-C', '--config',
+                                      required=is_required,
+                                      help='Full dir path to the yml config file.')
+
     def add_original_repo(self, is_required=False):
         self._arg_parser.add_argument('-or', '--original_repo',
                                       required=is_required,

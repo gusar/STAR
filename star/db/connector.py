@@ -10,11 +10,10 @@ class DBConnector(object):
     """
     Ubiquitous database connection object creator
     """
-    def __new__(cls, db_type, **kwargs):
+    def __new__(cls, db_type, *args):
         """
         :param db_type: str: key from DB_OBJECT_MAP
         :param kwargs: arguments required to initialize the required db connection
         :return: DB connection object of respective type
         """
-        return DB_OBJECT_MAP[db_type](**kwargs)
-
+        return DB_OBJECT_MAP[db_type](*args)

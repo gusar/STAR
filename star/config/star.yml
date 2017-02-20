@@ -1,0 +1,8 @@
+mongo:
+    uri: mongodb://localhost:27017/
+    db: star_raw
+    raw_staging: raw_staging
+    raw_archive: raw_archive
+    clean_staging: clean_staging
+    clean_archive: clean_archive
+    batch_size: 1000

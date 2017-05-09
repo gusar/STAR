@@ -1,7 +1,7 @@
 import unittest
 
 try:
-    from star.utils.spark import sparkenv
+    from star.spark.spark import sparkenv
     from pyspark import SparkContext
 
 

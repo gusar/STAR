@@ -3,7 +3,7 @@ import pandas as pd
 
 from star import repo
 from star import log
-from repo import load_json_data
+from star.repo import load_json_data
 
 
 def load_stocktwits_data():

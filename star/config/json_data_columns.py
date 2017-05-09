@@ -16,7 +16,8 @@ WANTED_COLUMNS = ['_id',
                   'object_updatedTime',
                   'verb']
 
-ALL_COLUMNS = ['_id',
+ALL_COLUMNS = ['id',
+               '_id',
                'actor_classification',
                'actor_displayName',
                'actor_followersCount',
@@ -50,3 +51,22 @@ ALL_COLUMNS = ['_id',
                'object_summary',
                'object_updatedTime',
                'verb']
+
+UNWANTED_COLUMNS = ['actor_followingStocksCount',
+                    'inReplyTo_objectType',
+                    'link',
+                    'actor_preferredUsername',
+                    'actor_image',
+                    'object_summary',
+                    'object_link',
+                    'actor_displayName',
+                    'actor_followingCount',
+                    'actor_classification',
+                    'inReplyTo_id',
+                    'id',
+                    'actor_links',
+                    'entities_chart',
+                    'actor_link',
+                    'actor_summary',
+                    'entities_video']
+

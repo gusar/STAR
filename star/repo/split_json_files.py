@@ -50,7 +50,7 @@ class FileSplitter:
             while read_next:
                 file_date_str = self._extract_file_date_str(json_file_path)
                 new_file_path = os.path.join(self.to_dir, '.'.join([file_date_str, str(part_count), 'json.gz']))
-                json_lines_list = map(lambda x: fin.readline(), xrange(self.lines_per_file))
+                json_lines_list = map(lambda x: fin.readline(), range(self.lines_per_file))
                 read_next = self._write_json_file(new_file_path, json_lines_list)
                 part_count += 1
             fin.close()

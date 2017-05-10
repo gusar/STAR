@@ -7,17 +7,18 @@ from star.utils import log
 
 class YahooFinance:
     def __init__(self, symbols_list, start_date, end_date):
-        self.symbols_list = symbols_list
         self.start_date = start_date
         self.end_date = end_date
+        self.symbols_list = [x.replace('$', '') for x in symbols_list]
+        self.history_dict = {}
 
     def request_historical(self):
-        history_list = []
         for symbol_str in self.symbols_list:
+            logging.info('Getting index history: ' + symbol_str)
             symbol = self.set_symbol(symbol_str)
-            history_list.append(symbol.get_historical(self.start_date, self.end_date))
-
-        logging.info('Cleaning raw STAGING to CLEAN')
+            df = pd.DataFrame(symbol.get_historical(self.start_date, self.end_date))
+            self.history_dict[symbol_str] = df
+        return self.history_dict
 
     @staticmethod
     def set_symbol(symbol):
@@ -34,7 +35,7 @@ def main():
             pd.set_option('display.expand_frame_repr', True)
             pd.set_option('display.max_colwidth', 1500)
 
-        yf = YahooFinance()
+        yf = YahooFinance(['$GLD', '$JNUG'], '2014-12-01', '2015-1-31')
         yf.request_historical()
 
     except (KeyboardInterrupt, SystemExit):

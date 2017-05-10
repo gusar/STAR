@@ -6,7 +6,7 @@ from star.db.connector import DBConnector
 from star.utils.arg_parser import ArgParser
 from star.utils.config_utils import StarConfig
 from star.config.config_name_map import *
-from star.utils.pandas_utils import filter_unwanted_columns, extract_urls
+from star.utils.pandas_utils import filter_unwanted_columns, extract_urls, parse_datetime_str_to_datetime64
 from star.config.json_data_columns import *
 
 
@@ -22,26 +22,32 @@ class ETLControl(object):
         self.staging_con = db_dict['staging']
         self.clean_con = db_dict['clean']
         self.archive_con = db_dict['archive']
+        self.id_field_df = ID_FIELD_DF
 
     def clean_batch(self):
         batch_df = self.load_staging()
-        self.write_to_archive(batch_df)
+        self.write_to_db(batch_df, self.archive_con)
         batch_df = filter_unwanted_columns(batch_df, WANTED_COLUMNS)
         batch_df = extract_urls(batch_df)
+        batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
+        self.write_to_db(batch_df, self.clean_con)
+        # self.delete_from_staging()
 
         print(1)
 
     def load_staging(self):
         return self.staging_con.find(None, self.batch_limit)
 
-    def write_to_archive(self, df):
-
-        df_ids = df[ID_FIELD_DF].tolist()
-        matching_ids = self.archive_con.find_distinct_list(df_ids, ID_FIELD_DF)
+    def write_to_db(self, df, collection_conf):
+        df_ids = df[self.id_field_df].tolist()
+        matching_ids = collection_conf.find_distinct_list(df_ids, self.id_field_df)
         ids_not_archived = list(set(df_ids) - set(matching_ids))
         logging.info('Writing to ARCHIVE: ' + str(len(ids_not_archived)))
         if len(ids_not_archived) > 0:
-            self.archive_con.insert_df(df[df[ID_FIELD_DF].isin(ids_not_archived)])
+            collection_conf.insert_df(df[df[self.id_field_df].isin(ids_not_archived)])
+
+    def delete_from_staging(self):
+        pass
 
 
 def get_config_values(config_path):

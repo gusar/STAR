@@ -1,7 +1,6 @@
 WANTED_COLUMNS = ['_id_$oid',
                   'actor_followersCount',
                   'actor_id',
-                  'actor_objectType',
                   'actor_statusesCount',
                   'actor_tradingStrategy_approach',
                   'actor_tradingStrategy_assetsFrequentlyTraded',
@@ -18,6 +17,7 @@ WANTED_COLUMNS = ['_id_$oid',
 
 ID_FIELD_DF = '_id_$oid'
 ID_FIELD = '$oid'
+DATE_FIELD = 'object_postedTime'
 
 
 ALL_COLUMNS = ['id',
@@ -67,6 +67,7 @@ UNWANTED_COLUMNS = ['actor_followingStocksCount',
                     'actor_image',
                     'object_summary',
                     'object_link',
+                    'actor_objectType',
                     'actor_displayName',
                     'actor_followingCount',
                     'actor_classification',

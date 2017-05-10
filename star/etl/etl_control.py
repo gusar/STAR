@@ -10,7 +10,7 @@ from star.utils.pandas_utils import (filter_unwanted_columns, extract_urls, pars
                                      extract_financial_symbols)
 from star.config.json_data_columns import *
 
-DEFAULT_BATCH_SIZE = 100000
+DEFAULT_BATCH_SIZE = 10000
 
 
 class ETLControl(object):
@@ -26,10 +26,9 @@ class ETLControl(object):
         self.id_field = ID_FIELD
 
     def clean_batch(self):
-        i = 0
+        i = 1
         while True:
             logging.info('ETL batch: {}'.format(i))
-            i += 1
             batch_df = self.load_staging()
             if len(batch_df) < 1:
                 break
@@ -40,6 +39,7 @@ class ETLControl(object):
             batch_df = extract_financial_symbols(batch_df)
             self.write_to_db(batch_df, self.clean_con)
             self.delete_from_staging(batch_df)
+            i += 1
 
     def load_staging(self):
         return self.staging_con.find(None, self.batch_limit)
@@ -55,7 +55,10 @@ class ETLControl(object):
     def delete_from_staging(self, df):
         df_ids = df[self.id_field_df].tolist()
         removed_result = self.staging_con.delete_by_id_in(df_ids)
-        logging.info('Deleted from STAGING: {}'.format(len(removed_result.deleted_count)))
+        if hasattr(removed_result, 'deleted_count'):
+            logging.info('Deleted from STAGING: {}'.format(removed_result.deleted_count))
+        else:
+            logging.info('Deleted from STAGING: count not found')
 
 
 def get_config_values(config_path):

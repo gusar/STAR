@@ -24,11 +24,10 @@ def extract_urls(df):
     :param df: DataFrame
     :return: DataFrame
     """
-    url_extraction_regex = r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
-    urls_df = df.body.str.extract(url_extraction_regex, expand=False)
-    df['body_urls'] = urls_df.apply(lambda x: [x for x in x.values if type(x) != type(math.nan)]
-                                    if x.notnull().any()
-                                    else None, axis=1)
+    url_extraction_regex_old = r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
+    url_extraction_regex = r"""(?P<url>https?://[^\s]+)"""
+    urls_df = df.body.str.findall(url_extraction_regex)
+    df['body_urls'] = urls_df.apply(lambda x: x if len(x) > 0 else None)
     return df
 
 

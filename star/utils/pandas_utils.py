@@ -25,10 +25,21 @@ def extract_urls(df):
     :return: DataFrame
     """
     url_extraction_regex = r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
-    urls_df = df.body.str.extract(url_extraction_regex)
+    urls_df = df.body.str.extract(url_extraction_regex, expand=False)
     df['body_urls'] = urls_df.apply(lambda x: [x for x in x.values if type(x) != type(math.nan)]
                                     if x.notnull().any()
                                     else None, axis=1)
+    return df
+
+
+def extract_financial_symbols(df):
+    """
+    Extracts symbols starting with $ from a dataframe's body column.
+    :param df: 
+    :return: 
+    """
+    symbols_series = df.body.str.findall(r'(\$[a-zA-Z]\w+)')
+    df['body_symbols'] = symbols_series.apply(lambda x: x if len(x) > 0 else None)
     return df
 
 

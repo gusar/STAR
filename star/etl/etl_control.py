@@ -6,9 +6,9 @@ from star.db.connector import DBConnector
 from star.utils.arg_parser import ArgParser
 from star.utils.config_utils import StarConfig
 from star.config.config_name_map import *
-from star.utils.pandas_utils import filter_unwanted_columns, extract_urls, parse_datetime_str_to_datetime64
+from star.utils.pandas_utils import (filter_unwanted_columns, extract_urls, parse_datetime_str_to_datetime64,
+                                     extract_financial_symbols)
 from star.config.json_data_columns import *
-
 
 DEFAULT_BATCH_SIZE = 100000
 
@@ -23,17 +23,23 @@ class ETLControl(object):
         self.clean_con = db_dict['clean']
         self.archive_con = db_dict['archive']
         self.id_field_df = ID_FIELD_DF
+        self.id_field = ID_FIELD
 
     def clean_batch(self):
-        batch_df = self.load_staging()
-        self.write_to_db(batch_df, self.archive_con)
-        batch_df = filter_unwanted_columns(batch_df, WANTED_COLUMNS)
-        batch_df = extract_urls(batch_df)
-        batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
-        self.write_to_db(batch_df, self.clean_con)
-        # self.delete_from_staging()
-
-        print(1)
+        i = 0
+        while True:
+            logging.info('ETL batch: {}'.format(i))
+            i += 1
+            batch_df = self.load_staging()
+            if len(batch_df) < 1:
+                break
+            self.write_to_db(batch_df, self.archive_con)
+            batch_df = filter_unwanted_columns(batch_df, WANTED_COLUMNS)
+            batch_df = extract_urls(batch_df)
+            batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
+            batch_df = extract_financial_symbols(batch_df)
+            self.write_to_db(batch_df, self.clean_con)
+            self.delete_from_staging(batch_df)
 
     def load_staging(self):
         return self.staging_con.find(None, self.batch_limit)
@@ -48,7 +54,8 @@ class ETLControl(object):
 
     def delete_from_staging(self, df):
         df_ids = df[self.id_field_df].tolist()
-        logging.info('Deleting from STAGING: {}'.format(len(df_ids)))
+        removed_result = self.staging_con.delete_by_id_in(df_ids)
+        logging.info('Deleted from STAGING: {}'.format(len(removed_result.deleted_count)))
 
 
 def get_config_values(config_path):

@@ -79,6 +79,15 @@ class Mongo(object):
         """
         return self._collection.find({id_field: {'$in': id_list}}).distinct(id_field)
 
+    def delete_by_id_in(self, id_list):
+        """
+        Match a list of field values against database.
+        :param id_list: list of strings
+        :return: list of strings
+        """
+        id_list_bson = [ObjectId(x) for x in id_list]
+        return self._collection.delete_many({'_id': {'$in': id_list_bson}})
+
 
     @property
     def get_db(self):

@@ -5,4 +5,4 @@ mongo:
     raw_archive: raw_archive
     clean_staging: clean_staging
     clean_archive: clean_archive
-    batch_size: 1000
+    batch_size: 100000

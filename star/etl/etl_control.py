@@ -6,6 +6,7 @@ from star.db.connector import DBConnector
 from star.utils.arg_parser import ArgParser
 from star.utils.config_utils import StarConfig
 from star.config.config_name_map import *
+from star.utils.pandas_utils import filter_unwanted_columns, extract_urls
 from star.config.json_data_columns import *
 
 
@@ -24,14 +25,23 @@ class ETLControl(object):
 
     def clean_batch(self):
         batch_df = self.load_staging()
-
+        self.write_to_archive(batch_df)
+        batch_df = filter_unwanted_columns(batch_df, WANTED_COLUMNS)
+        batch_df = extract_urls(batch_df)
 
         print(1)
 
     def load_staging(self):
-        return self.staging_con.find({}, self.batch_limit)
+        return self.staging_con.find(None, self.batch_limit)
 
+    def write_to_archive(self, df):
 
+        df_ids = df[ID_FIELD_DF].tolist()
+        matching_ids = self.archive_con.find_distinct_list(df_ids, ID_FIELD_DF)
+        ids_not_archived = list(set(df_ids) - set(matching_ids))
+        logging.info('Writing to ARCHIVE: ' + str(len(ids_not_archived)))
+        if len(ids_not_archived) > 0:
+            self.archive_con.insert_df(df[df[ID_FIELD_DF].isin(ids_not_archived)])
 
 
 def get_config_values(config_path):

@@ -3,6 +3,7 @@ import pymongo as pm
 from star.db.mongo_query import MongoQueryBuilder
 from star.utils import pandas_utils
 
+from bson.objectid import ObjectId
 
 class Mongo(object):
 
@@ -31,7 +32,17 @@ class Mongo(object):
         if self._db is not None:
             self._collection = self._db[collection_name]
         else:
-            raise MongoNoneCollection("Database not defined")
+            raise MongoNoneCollection()
+
+    def insert_df(self, df):
+        """
+        Insert documents into pre-defined collection
+        :param df: dict or iterable
+        """
+        if self._collection:
+            self._collection.insert(df.to_dict('records'))
+        else:
+            raise MongoNoneCollection
 
     def insert(self, data):
         """
@@ -43,9 +54,9 @@ class Mongo(object):
         else:
             raise MongoNoneCollection
 
-    def find(self, query={}, limit=None):
+    def find(self, query={}, limit=None, df=True):
         """
-        Perform find operation on pre-fedined collection
+        Perform find operation on pre-defined collection
         :param query: str: mongodb query format, default: {}
         :param limit: int
         :return: DataFrame
@@ -57,6 +68,16 @@ class Mongo(object):
         else:
             cursor = self._collection.find(query).limit(limit)
         return pandas_utils.mongo_to_df(cursor)
+
+    def find_distinct_list(self, id_list, id_field):
+        """
+        Match a list of field values against database.
+        :param id_list: list of strings
+        :param id_field: str
+        :return: list of strings
+        """
+        return self._collection.find({id_field: {'$in': id_list}}).distinct(id_field)
+
 
     @property
     def get_db(self):

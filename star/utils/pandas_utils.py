@@ -17,6 +17,11 @@ def filter_unwanted_columns(df, wanted_cols):
 
 
 def extract_urls(df):
+    """
+    Extract URLs, combine results into one column of sets, append to original.
+    :param df: DataFrame
+    :return: DataFrame
+    """
     url_extraction_regex = r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
     df.body.str.extract(url_extraction_regex)
     return df.apply(lambda x: set(x.values), axis=1)

@@ -1,4 +1,4 @@
-WANTED_COLUMNS = ['_id',
+WANTED_COLUMNS = ['_id_$oid',
                   'actor_followersCount',
                   'actor_id',
                   'actor_objectType',
@@ -8,16 +8,20 @@ WANTED_COLUMNS = ['_id',
                   'actor_tradingStrategy_experience',
                   'actor_tradingStrategy_holdingPeriod',
                   'body',
+                  'entities_chart_url',
                   'entities_sentiment',
                   'entities_symbols',
                   'object_id',
                   'object_objectType',
-                  'object_postedTime',
-                  'object_updatedTime',
-                  'verb']
+                  'object_postedTime']
+
+
+ID_FIELD_DF = '_id_$oid'
+ID_FIELD = '$oid'
+
 
 ALL_COLUMNS = ['id',
-               '_id',
+               '_id_$oid',
                'actor_classification',
                'actor_displayName',
                'actor_followersCount',
@@ -37,6 +41,10 @@ ALL_COLUMNS = ['id',
                'actor_tradingStrategy_holdingPeriod',
                'body',
                'entities_chart',
+               'entities_chart_large',
+               'entities_chart_original',
+               'entities_chart_thumb',
+               'entities_chart_url',
                'entities_sentiment',
                'entities_symbols',
                'entities_video',
@@ -68,5 +76,6 @@ UNWANTED_COLUMNS = ['actor_followingStocksCount',
                     'entities_chart',
                     'actor_link',
                     'actor_summary',
-                    'entities_video']
+                    'entities_video',
+                    'object_updatedTime']
 

@@ -1,6 +1,7 @@
 import json
 import pandas
 import iso8601
+import math
 from bson import json_util
 
 
@@ -25,7 +26,9 @@ def extract_urls(df):
     """
     url_extraction_regex = r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
     urls_df = df.body.str.extract(url_extraction_regex)
-    df['body_urls'] = urls_df.apply(lambda x: set(x.values), axis=1)
+    df['body_urls'] = urls_df.apply(lambda x: [x for x in x.values if type(x) != type(math.nan)]
+                                    if x.notnull().any()
+                                    else None, axis=1)
     return df
 
 

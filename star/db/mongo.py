@@ -9,6 +9,7 @@ class Mongo(object):
 
     def __init__(self, mongodb_uri, db_name, collection):
         self.client = pm.MongoClient(mongodb_uri, connect=True)
+        self.collection_name = collection
 
         self._db = None
         self._collection = None

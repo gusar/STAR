@@ -38,16 +38,17 @@ class ETLControl(object):
     def load_staging(self):
         return self.staging_con.find(None, self.batch_limit)
 
-    def write_to_db(self, df, collection_conf):
+    def write_to_db(self, df, con):
         df_ids = df[self.id_field_df].tolist()
-        matching_ids = collection_conf.find_distinct_list(df_ids, self.id_field_df)
+        matching_ids = con.find_distinct_list(df_ids, self.id_field_df)
         ids_not_archived = list(set(df_ids) - set(matching_ids))
-        logging.info('Writing to ARCHIVE: ' + str(len(ids_not_archived)))
+        logging.info('Writing to {}: {}'.format(con.collection_name, str(len(ids_not_archived))))
         if len(ids_not_archived) > 0:
-            collection_conf.insert_df(df[df[self.id_field_df].isin(ids_not_archived)])
+            con.insert_df(df[df[self.id_field_df].isin(ids_not_archived)])
 
-    def delete_from_staging(self):
-        pass
+    def delete_from_staging(self, df):
+        df_ids = df[self.id_field_df].tolist()
+        logging.info('Deleting from STAGING: {}'.format(len(df_ids)))
 
 
 def get_config_values(config_path):

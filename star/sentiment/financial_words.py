@@ -21,20 +21,35 @@ class WordList:
 
         words_df = pd.read_excel(wordlist_path)
         words_df = filter_unwanted_columns(words_df, WANTED_COLUMNS_WORDS)
-        # words_df['sentiment'] = words_df.apply(lambda row: row.Negative)
-        # words_df['Negative'] = words_df['Negative'] != 0
-        # words_df['Positive'] = words_df['Positive'] != 0
-        # words_df['Uncertainty'] = words_df['Uncertainty'] != 0
-        # words_df['sentiment'] = words_df.any(1, True)
-        # words_df = words_df[words_df.sentiment == True]
-        # del(words_df['Negative'])
-        # del (words_df['Positive'])
-        # del (words_df['Uncertainty'])
+        words_df = words_df[(words_df.Negative != 0)
+                            | (words_df.Positive != 0)
+                            | (words_df.Uncertainty != 0)].reset_index()
+        words_df['sentiment'] = words_df.apply(lambda x: sentiment(x[1], x[2]), axis=1)
+        del(words_df['Negative'])
+        del (words_df['Positive'])
+        del (words_df['Uncertainty'])
+        words_df.reset_index(drop=True, inplace=True)
 
-        words_df = words_df[(words_df.Negative != 0) | (words_df.Positive != 0) | (words_df.Uncertainty != 0)]
-
+        self.write_to_db(words_df)
 
         print(1)
+
+    def write_to_db(self, df):
+        df_words = df['Word'].tolist()
+        matching_words = self.words_con.find_distinct_list(df_words, 'Word')
+        ids_not_archived = list(set(df_words) - set(matching_words))
+        logging.info('Writing to {}: {}'.format(self.words_con.collection_name, str(len(ids_not_archived))))
+        if len(ids_not_archived) > 0:
+            self.words_con.insert_df(df[df['Word'].isin(ids_not_archived)])
+
+
+def sentiment(n, p):
+    if n != 0:
+        return -1
+    elif p != 0:
+        return 1
+    else:
+        return 0
 
 
 def create_db_connectors(config):

@@ -80,7 +80,7 @@ class StockTwitsManager:
             logging.info(str(c))
             normalized_dict = pjson.nested_to_record(json.loads(s))
             return {key.replace('.', '_'): value for key, value in normalized_dict.iteritems()
-                    if key in json_data_columns.WANTED_COLUMNS}
+                    if key in json_data_columns.WANTED_COLUMNS_STOCKTWITS}
 
         return [json_to_norm_dict(json_str, count)
                 for json_str, count in zip(json_str_list, range(len(json_str_list)))]

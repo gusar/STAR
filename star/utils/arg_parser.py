@@ -34,15 +34,20 @@ class ArgParser:
 
     def add_mongo_uri(self, is_required=False):
         self._arg_parser.add_argument('-mu', '--mongo_uri',
-                                      is_required=is_required,
+                                      required=is_required,
                                       help='Connection URI for MongoDB')
 
     def add_db_name(self, is_required=False):
         self._arg_parser.add_argument('-db', '--db_name',
-                                      is_required=is_required,
+                                      required=is_required,
                                       help='Database name')
 
     def add_collection_name(self, is_required=False):
         self._arg_parser.add_argument('-col', '--collection_name',
-                                      is_required=is_required,
+                                      required=is_required,
                                       help='MongoDB collection name')
+
+    def add_path(self, is_required=False):
+        self._arg_parser.add_argument('-p', '--path',
+                                      required=is_required,
+                                      help='Argument for a path')

@@ -58,6 +58,8 @@ class WordList:
             batch_df['tokens'] = batch_df['body'].apply(self.tokenize_text)
             del(batch_df['body'])
             sentiments_df = self.count_pos_neg(batch_df)
+            sentiments_df['object_postedTime'] = pd.to_datetime(sentiments_df['object_postedTime_$date'], unit='ms')
+            del(sentiments_df['object_postedTime_$date'])
             self.write_sentiments(sentiments_df)
             self.delete_from_staging(original_ids)
             i += 1

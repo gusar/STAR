@@ -32,11 +32,12 @@ class ETLControl(object):
             batch_df = self.load_staging()
             if len(batch_df) < 1:
                 break
-            self.write_to_db(batch_df, self.archive_con)
-            batch_df = filter_unwanted_columns(batch_df, WANTED_COLUMNS_STOCKTWITS)
+            # self.write_to_db(batch_df, self.archive_con)
+            batch_df = batch_df[WANTED_COLUMNS_STOCKTWITS]
+            batch_df = extract_financial_symbols(batch_df)
+            batch_df = batch_df[batch_df['body_symbols'].notnull()]
             batch_df = extract_urls(batch_df)
             batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
-            batch_df = extract_financial_symbols(batch_df)
             self.write_to_db(batch_df, self.clean_con)
             self.delete_from_staging(batch_df)
             i += 1

@@ -1,9 +1,9 @@
 import pymongo as pm
 
-from star.db.mongo_query import MongoQueryBuilder
 from star.utils import pandas_utils
 
 from bson.objectid import ObjectId
+
 
 class Mongo(object):
 
@@ -16,7 +16,6 @@ class Mongo(object):
 
         self.set_db(db_name)
         self.set_collection(collection)
-        self.query_builder = MongoQueryBuilder(self)
 
     def set_db(self, db_name):
         """
@@ -55,7 +54,7 @@ class Mongo(object):
         else:
             raise MongoNoneCollection
 
-    def find(self, query={}, limit=None, df=True):
+    def find(self, query={}, limit=None):
         """
         Perform find operation on pre-defined collection
         :param query: str: mongodb query format, default: {}
@@ -68,6 +67,12 @@ class Mongo(object):
             cursor = self._collection.find(query)
         else:
             cursor = self._collection.find(query).limit(limit)
+        return pandas_utils.mongo_to_df(cursor)
+
+    def find_between_dates(self, from_date, to_date, field):
+        if self._collection is None:
+            raise MongoNoneCollection
+        cursor = self._collection.find({field: {"$gte": from_date, "$lt": to_date}})
         return pandas_utils.mongo_to_df(cursor)
 
     def find_distinct_list(self, id_list, id_field):
@@ -87,7 +92,6 @@ class Mongo(object):
         """
         id_list_bson = [ObjectId(x) for x in id_list]
         return self._collection.delete_many({'_id': {'$in': id_list_bson}})
-
 
     @property
     def get_db(self):

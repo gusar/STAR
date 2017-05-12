@@ -15,7 +15,6 @@ def sparkenv(func):
             os.environ['SPARK_HOME'] = "/home/andy/spark"
             os.environ['PYSPARK_PYTHON'] = "/home/andy/anaconda3/envs/star/bin/python3.5"
             os.environ['PYSPARK_DRIVER_PYTHON'] = "/home/andy/anaconda3/envs/star/bin/python3.5"
-            # os.environ['PYSPARK_SUBMIT_ARGS'] = "--master star://master:8080"
         except ImportError as err:
             raise err('Spark wrapper could not import the required libraries')
             sys.exit(-1)

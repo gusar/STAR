@@ -22,8 +22,8 @@ class TestFlattenJson(unittest.TestCase):
 
     def test_one_flatten_keys(self):
         test_dic = {'a': '1',
-               'b': '2',
-               'c': {'c1': '3', 'c2': '4'}}
+                    'b': '2',
+                    'c': {'c1': '3', 'c2': '4'}}
 
         output_keys = flatten_json(test_dic).keys()
         expected_keys = ['a', 'b', 'c_c1', 'c_c2']
@@ -34,7 +34,8 @@ class TestFlattenJson(unittest.TestCase):
         test_dic = {
             'a': 1,
             'b': 2,
-            'c': [{'d': [2, 3, 4], 'e': [{'f': 1, 'g': 2}]}]}
+            'c': [{'d': [2, 3, 4],
+                   'e': [{'f': 1, 'g': 2}]}]}
 
         expected_keys = ['a', 'b', 'c_0_e_0_g', 'c_0_e_0_f', 'c_0_d_1', 'c_0_d_0', 'c_0_d_2']
         flattened = flatten_json(test_dic)

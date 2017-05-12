@@ -1,0 +1,351 @@
+/home/andy/anaconda3/envs/star/bin/python /home/andy/PycharmProjects/STAR/star/sentiment/financial_words.py -p /home/andy/PycharmProjects/STAR/star/sentiment/res/MasterDictionary.xlsx -C /home/andy/PycharmProjects/STAR/star/config/star.yml
+2017-05-12 04:18:45,065 | INFO | log:7 | Begin
+2017-05-12 04:18:45,065 | INFO | financial_words:140 | Loading financial words
+2017-05-12 04:18:45,300 | INFO | financial_words:53 | Tokenize batch: 1
+/home/andy/PycharmProjects/STAR/star/sentiment/financial_words.py:75: SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  df['sentiment'] = df.apply(lambda x: sentiment(x['bullish'], x['bearish']), axis=1)
+2017-05-12 04:19:14,469 | INFO | financial_words:79 | Writing to sentiments: 1302
+2017-05-12 04:19:14,800 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:19:14,800 | INFO | financial_words:53 | Tokenize batch: 2
+2017-05-12 04:19:45,244 | INFO | financial_words:79 | Writing to sentiments: 1323
+2017-05-12 04:19:45,549 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:19:45,549 | INFO | financial_words:53 | Tokenize batch: 3
+2017-05-12 04:20:13,888 | INFO | financial_words:79 | Writing to sentiments: 1410
+2017-05-12 04:20:14,201 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:20:14,202 | INFO | financial_words:53 | Tokenize batch: 4
+2017-05-12 04:20:45,154 | INFO | financial_words:79 | Writing to sentiments: 1352
+2017-05-12 04:20:45,449 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:20:45,449 | INFO | financial_words:53 | Tokenize batch: 5
+2017-05-12 04:21:13,412 | INFO | financial_words:79 | Writing to sentiments: 1373
+2017-05-12 04:21:13,700 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:21:13,701 | INFO | financial_words:53 | Tokenize batch: 6
+2017-05-12 04:21:44,186 | INFO | financial_words:79 | Writing to sentiments: 1313
+2017-05-12 04:21:44,486 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:21:44,486 | INFO | financial_words:53 | Tokenize batch: 7
+2017-05-12 04:22:13,191 | INFO | financial_words:79 | Writing to sentiments: 1330
+2017-05-12 04:22:13,509 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:22:13,510 | INFO | financial_words:53 | Tokenize batch: 8
+2017-05-12 04:22:42,475 | INFO | financial_words:79 | Writing to sentiments: 1291
+2017-05-12 04:22:42,788 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:22:42,788 | INFO | financial_words:53 | Tokenize batch: 9
+2017-05-12 04:23:13,409 | INFO | financial_words:79 | Writing to sentiments: 1311
+2017-05-12 04:23:13,730 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:23:13,730 | INFO | financial_words:53 | Tokenize batch: 10
+2017-05-12 04:23:42,612 | INFO | financial_words:79 | Writing to sentiments: 1368
+2017-05-12 04:23:42,947 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:23:42,947 | INFO | financial_words:53 | Tokenize batch: 11
+2017-05-12 04:24:14,876 | INFO | financial_words:79 | Writing to sentiments: 1396
+2017-05-12 04:24:15,187 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:24:15,187 | INFO | financial_words:53 | Tokenize batch: 12
+2017-05-12 04:24:44,944 | INFO | financial_words:79 | Writing to sentiments: 1392
+2017-05-12 04:24:45,263 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:24:45,263 | INFO | financial_words:53 | Tokenize batch: 13
+2017-05-12 04:25:13,862 | INFO | financial_words:79 | Writing to sentiments: 1332
+2017-05-12 04:25:14,178 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:25:14,178 | INFO | financial_words:53 | Tokenize batch: 14
+2017-05-12 04:25:45,939 | INFO | financial_words:79 | Writing to sentiments: 1382
+2017-05-12 04:25:46,264 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:25:46,264 | INFO | financial_words:53 | Tokenize batch: 15
+2017-05-12 04:26:14,481 | INFO | financial_words:79 | Writing to sentiments: 1315
+2017-05-12 04:26:14,781 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:26:14,781 | INFO | financial_words:53 | Tokenize batch: 16
+2017-05-12 04:26:44,716 | INFO | financial_words:79 | Writing to sentiments: 1346
+2017-05-12 04:26:45,027 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:26:45,028 | INFO | financial_words:53 | Tokenize batch: 17
+2017-05-12 04:27:14,212 | INFO | financial_words:79 | Writing to sentiments: 1359
+2017-05-12 04:27:14,513 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:27:14,514 | INFO | financial_words:53 | Tokenize batch: 18
+2017-05-12 04:27:43,819 | INFO | financial_words:79 | Writing to sentiments: 1438
+2017-05-12 04:27:44,128 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:27:44,128 | INFO | financial_words:53 | Tokenize batch: 19
+2017-05-12 04:28:14,024 | INFO | financial_words:79 | Writing to sentiments: 1342
+2017-05-12 04:28:14,325 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:28:14,325 | INFO | financial_words:53 | Tokenize batch: 20
+2017-05-12 04:28:42,707 | INFO | financial_words:79 | Writing to sentiments: 1350
+2017-05-12 04:28:43,006 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:28:43,006 | INFO | financial_words:53 | Tokenize batch: 21
+2017-05-12 04:29:14,064 | INFO | financial_words:79 | Writing to sentiments: 1359
+2017-05-12 04:29:14,387 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:29:14,387 | INFO | financial_words:53 | Tokenize batch: 22
+2017-05-12 04:29:42,905 | INFO | financial_words:79 | Writing to sentiments: 1357
+2017-05-12 04:29:43,205 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:29:43,205 | INFO | financial_words:53 | Tokenize batch: 23
+2017-05-12 04:30:13,224 | INFO | financial_words:79 | Writing to sentiments: 1395
+2017-05-12 04:30:13,533 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:30:13,533 | INFO | financial_words:53 | Tokenize batch: 24
+2017-05-12 04:30:46,030 | INFO | financial_words:79 | Writing to sentiments: 1514
+2017-05-12 04:30:46,346 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:30:46,346 | INFO | financial_words:53 | Tokenize batch: 25
+2017-05-12 04:31:14,522 | INFO | financial_words:79 | Writing to sentiments: 1331
+2017-05-12 04:31:14,820 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:31:14,821 | INFO | financial_words:53 | Tokenize batch: 26
+2017-05-12 04:31:46,069 | INFO | financial_words:79 | Writing to sentiments: 1401
+2017-05-12 04:31:46,376 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:31:46,376 | INFO | financial_words:53 | Tokenize batch: 27
+2017-05-12 04:32:15,749 | INFO | financial_words:79 | Writing to sentiments: 1438
+2017-05-12 04:32:16,109 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:32:16,109 | INFO | financial_words:53 | Tokenize batch: 28
+2017-05-12 04:32:44,735 | INFO | financial_words:79 | Writing to sentiments: 1333
+2017-05-12 04:32:45,029 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:32:45,030 | INFO | financial_words:53 | Tokenize batch: 29
+2017-05-12 04:33:17,059 | INFO | financial_words:79 | Writing to sentiments: 1424
+2017-05-12 04:33:17,375 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:33:17,375 | INFO | financial_words:53 | Tokenize batch: 30
+2017-05-12 04:33:45,604 | INFO | financial_words:79 | Writing to sentiments: 1333
+2017-05-12 04:33:45,911 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:33:45,911 | INFO | financial_words:53 | Tokenize batch: 31
+2017-05-12 04:34:15,018 | INFO | financial_words:79 | Writing to sentiments: 1334
+2017-05-12 04:34:15,333 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:34:15,334 | INFO | financial_words:53 | Tokenize batch: 32
+2017-05-12 04:34:44,826 | INFO | financial_words:79 | Writing to sentiments: 1396
+2017-05-12 04:34:45,112 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:34:45,112 | INFO | financial_words:53 | Tokenize batch: 33
+2017-05-12 04:35:13,243 | INFO | financial_words:79 | Writing to sentiments: 1340
+2017-05-12 04:35:13,551 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:35:13,551 | INFO | financial_words:53 | Tokenize batch: 34
+2017-05-12 04:35:43,434 | INFO | financial_words:79 | Writing to sentiments: 1296
+2017-05-12 04:35:43,724 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:35:43,724 | INFO | financial_words:53 | Tokenize batch: 35
+2017-05-12 04:36:12,511 | INFO | financial_words:79 | Writing to sentiments: 1308
+2017-05-12 04:36:12,804 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:36:12,804 | INFO | financial_words:53 | Tokenize batch: 36
+2017-05-12 04:36:41,949 | INFO | financial_words:79 | Writing to sentiments: 1343
+2017-05-12 04:36:42,242 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:36:42,242 | INFO | financial_words:53 | Tokenize batch: 37
+2017-05-12 04:37:13,889 | INFO | financial_words:79 | Writing to sentiments: 1373
+2017-05-12 04:37:14,240 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:37:14,240 | INFO | financial_words:53 | Tokenize batch: 38
+2017-05-12 04:37:45,084 | INFO | financial_words:79 | Writing to sentiments: 1291
+2017-05-12 04:37:45,385 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:37:45,385 | INFO | financial_words:53 | Tokenize batch: 39
+2017-05-12 04:38:14,307 | INFO | financial_words:79 | Writing to sentiments: 1294
+2017-05-12 04:38:14,587 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:38:14,587 | INFO | financial_words:53 | Tokenize batch: 40
+2017-05-12 04:38:45,857 | INFO | financial_words:79 | Writing to sentiments: 1352
+2017-05-12 04:38:46,150 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:38:46,150 | INFO | financial_words:53 | Tokenize batch: 41
+2017-05-12 04:39:15,014 | INFO | financial_words:79 | Writing to sentiments: 1354
+2017-05-12 04:39:15,311 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:39:15,311 | INFO | financial_words:53 | Tokenize batch: 42
+2017-05-12 04:39:45,236 | INFO | financial_words:79 | Writing to sentiments: 1307
+2017-05-12 04:39:45,538 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:39:45,538 | INFO | financial_words:53 | Tokenize batch: 43
+2017-05-12 04:40:15,155 | INFO | financial_words:79 | Writing to sentiments: 1349
+2017-05-12 04:40:15,464 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:40:15,464 | INFO | financial_words:53 | Tokenize batch: 44
+2017-05-12 04:40:45,503 | INFO | financial_words:79 | Writing to sentiments: 1328
+2017-05-12 04:40:45,806 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:40:45,806 | INFO | financial_words:53 | Tokenize batch: 45
+2017-05-12 04:41:15,291 | INFO | financial_words:79 | Writing to sentiments: 1367
+2017-05-12 04:41:15,570 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:41:15,571 | INFO | financial_words:53 | Tokenize batch: 46
+2017-05-12 04:41:44,217 | INFO | financial_words:79 | Writing to sentiments: 1391
+2017-05-12 04:41:44,509 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:41:44,509 | INFO | financial_words:53 | Tokenize batch: 47
+2017-05-12 04:42:13,500 | INFO | financial_words:79 | Writing to sentiments: 1325
+2017-05-12 04:42:13,775 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:42:13,776 | INFO | financial_words:53 | Tokenize batch: 48
+2017-05-12 04:42:41,748 | INFO | financial_words:79 | Writing to sentiments: 1373
+2017-05-12 04:42:42,059 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:42:42,060 | INFO | financial_words:53 | Tokenize batch: 49
+2017-05-12 04:43:12,054 | INFO | financial_words:79 | Writing to sentiments: 1356
+2017-05-12 04:43:12,365 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:43:12,365 | INFO | financial_words:53 | Tokenize batch: 50
+2017-05-12 04:43:40,021 | INFO | financial_words:79 | Writing to sentiments: 1318
+2017-05-12 04:43:40,317 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:43:40,317 | INFO | financial_words:53 | Tokenize batch: 51
+2017-05-12 04:44:11,242 | INFO | financial_words:79 | Writing to sentiments: 1384
+2017-05-12 04:44:11,527 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:44:11,527 | INFO | financial_words:53 | Tokenize batch: 52
+2017-05-12 04:44:39,105 | INFO | financial_words:79 | Writing to sentiments: 1447
+2017-05-12 04:44:39,398 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:44:39,398 | INFO | financial_words:53 | Tokenize batch: 53
+/home/andy/anaconda3/envs/star/lib/python3.5/site-packages/bs4/__init__.py:282: UserWarning: "http://stks.co/i1vki&gt;$dlia" looks like a URL. Beautiful Soup is not an HTTP client. You should probably use an HTTP client like requests to get the document behind the URL, and feed that document to Beautiful Soup.
+  ' that document to Beautiful Soup.' % decoded_markup
+2017-05-12 04:45:10,125 | INFO | financial_words:79 | Writing to sentiments: 1378
+2017-05-12 04:45:10,419 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:45:10,420 | INFO | financial_words:53 | Tokenize batch: 54
+2017-05-12 04:45:39,996 | INFO | financial_words:79 | Writing to sentiments: 1391
+2017-05-12 04:45:40,297 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:45:40,297 | INFO | financial_words:53 | Tokenize batch: 55
+2017-05-12 04:46:07,928 | INFO | financial_words:79 | Writing to sentiments: 1339
+2017-05-12 04:46:08,211 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:46:08,211 | INFO | financial_words:53 | Tokenize batch: 56
+2017-05-12 04:46:38,261 | INFO | financial_words:79 | Writing to sentiments: 1057
+2017-05-12 04:46:38,529 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:46:38,530 | INFO | financial_words:53 | Tokenize batch: 57
+2017-05-12 04:47:06,563 | INFO | financial_words:79 | Writing to sentiments: 1344
+2017-05-12 04:47:06,847 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:47:06,847 | INFO | financial_words:53 | Tokenize batch: 58
+2017-05-12 04:47:34,527 | INFO | financial_words:79 | Writing to sentiments: 1453
+2017-05-12 04:47:34,819 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:47:34,819 | INFO | financial_words:53 | Tokenize batch: 59
+2017-05-12 04:48:05,359 | INFO | financial_words:79 | Writing to sentiments: 1287
+2017-05-12 04:48:05,641 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:48:05,642 | INFO | financial_words:53 | Tokenize batch: 60
+2017-05-12 04:48:33,305 | INFO | financial_words:79 | Writing to sentiments: 1341
+2017-05-12 04:48:33,606 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:48:33,606 | INFO | financial_words:53 | Tokenize batch: 61
+2017-05-12 04:49:01,889 | INFO | financial_words:79 | Writing to sentiments: 1309
+2017-05-12 04:49:02,182 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:49:02,182 | INFO | financial_words:53 | Tokenize batch: 62
+2017-05-12 04:49:31,875 | INFO | financial_words:79 | Writing to sentiments: 1407
+2017-05-12 04:49:32,186 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:49:32,186 | INFO | financial_words:53 | Tokenize batch: 63
+2017-05-12 04:49:59,064 | INFO | financial_words:79 | Writing to sentiments: 1450
+2017-05-12 04:49:59,346 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:49:59,346 | INFO | financial_words:53 | Tokenize batch: 64
+2017-05-12 04:50:27,408 | INFO | financial_words:79 | Writing to sentiments: 1285
+2017-05-12 04:50:27,688 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:50:27,689 | INFO | financial_words:53 | Tokenize batch: 65
+2017-05-12 04:50:56,580 | INFO | financial_words:79 | Writing to sentiments: 1359
+2017-05-12 04:50:56,864 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:50:56,865 | INFO | financial_words:53 | Tokenize batch: 66
+2017-05-12 04:51:23,872 | INFO | financial_words:79 | Writing to sentiments: 1369
+2017-05-12 04:51:24,166 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:51:24,167 | INFO | financial_words:53 | Tokenize batch: 67
+2017-05-12 04:51:55,448 | INFO | financial_words:79 | Writing to sentiments: 1532
+2017-05-12 04:51:55,757 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:51:55,757 | INFO | financial_words:53 | Tokenize batch: 68
+2017-05-12 04:52:25,824 | INFO | financial_words:79 | Writing to sentiments: 1390
+2017-05-12 04:52:26,113 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:52:26,113 | INFO | financial_words:53 | Tokenize batch: 69
+2017-05-12 04:52:54,230 | INFO | financial_words:79 | Writing to sentiments: 1440
+2017-05-12 04:52:54,519 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:52:54,519 | INFO | financial_words:53 | Tokenize batch: 70
+2017-05-12 04:53:24,457 | INFO | financial_words:79 | Writing to sentiments: 1292
+2017-05-12 04:53:24,735 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:53:24,735 | INFO | financial_words:53 | Tokenize batch: 71
+2017-05-12 04:53:52,663 | INFO | financial_words:79 | Writing to sentiments: 1339
+2017-05-12 04:53:52,995 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:53:52,996 | INFO | financial_words:53 | Tokenize batch: 72
+2017-05-12 04:54:20,721 | INFO | financial_words:79 | Writing to sentiments: 1341
+2017-05-12 04:54:21,014 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:54:21,014 | INFO | financial_words:53 | Tokenize batch: 73
+2017-05-12 04:54:50,371 | INFO | financial_words:79 | Writing to sentiments: 1336
+2017-05-12 04:54:50,681 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:54:50,681 | INFO | financial_words:53 | Tokenize batch: 74
+2017-05-12 04:55:18,831 | INFO | financial_words:79 | Writing to sentiments: 1400
+2017-05-12 04:55:19,115 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:55:19,115 | INFO | financial_words:53 | Tokenize batch: 75
+2017-05-12 04:55:46,532 | INFO | financial_words:79 | Writing to sentiments: 1399
+2017-05-12 04:55:46,811 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:55:46,811 | INFO | financial_words:53 | Tokenize batch: 76
+2017-05-12 04:56:14,780 | INFO | financial_words:79 | Writing to sentiments: 1352
+2017-05-12 04:56:15,074 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:56:15,074 | INFO | financial_words:53 | Tokenize batch: 77
+2017-05-12 04:56:45,313 | INFO | financial_words:79 | Writing to sentiments: 1592
+2017-05-12 04:56:45,621 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:56:45,622 | INFO | financial_words:53 | Tokenize batch: 78
+2017-05-12 04:57:13,328 | INFO | financial_words:79 | Writing to sentiments: 1423
+2017-05-12 04:57:13,637 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:57:13,638 | INFO | financial_words:53 | Tokenize batch: 79
+2017-05-12 04:57:43,495 | INFO | financial_words:79 | Writing to sentiments: 1522
+2017-05-12 04:57:43,832 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:57:43,832 | INFO | financial_words:53 | Tokenize batch: 80
+2017-05-12 04:58:16,903 | INFO | financial_words:79 | Writing to sentiments: 1473
+2017-05-12 04:58:17,262 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:58:17,262 | INFO | financial_words:53 | Tokenize batch: 81
+2017-05-12 04:58:48,325 | INFO | financial_words:79 | Writing to sentiments: 1350
+2017-05-12 04:58:48,662 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:58:48,663 | INFO | financial_words:53 | Tokenize batch: 82
+2017-05-12 04:59:21,304 | INFO | financial_words:79 | Writing to sentiments: 1377
+2017-05-12 04:59:21,629 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:59:21,629 | INFO | financial_words:53 | Tokenize batch: 83
+2017-05-12 04:59:57,323 | INFO | financial_words:79 | Writing to sentiments: 1515
+2017-05-12 04:59:57,664 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 04:59:57,664 | INFO | financial_words:53 | Tokenize batch: 84
+2017-05-12 05:00:30,202 | INFO | financial_words:79 | Writing to sentiments: 1303
+2017-05-12 05:00:30,491 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:00:30,491 | INFO | financial_words:53 | Tokenize batch: 85
+2017-05-12 05:01:00,124 | INFO | financial_words:79 | Writing to sentiments: 1448
+2017-05-12 05:01:00,456 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:01:00,456 | INFO | financial_words:53 | Tokenize batch: 86
+2017-05-12 05:01:31,527 | INFO | financial_words:79 | Writing to sentiments: 1225
+2017-05-12 05:01:31,821 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:01:31,822 | INFO | financial_words:53 | Tokenize batch: 87
+2017-05-12 05:02:00,813 | INFO | financial_words:79 | Writing to sentiments: 1291
+2017-05-12 05:02:01,135 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:02:01,135 | INFO | financial_words:53 | Tokenize batch: 88
+2017-05-12 05:02:30,414 | INFO | financial_words:79 | Writing to sentiments: 1297
+2017-05-12 05:02:30,709 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:02:30,709 | INFO | financial_words:53 | Tokenize batch: 89
+2017-05-12 05:03:02,630 | INFO | financial_words:79 | Writing to sentiments: 1332
+2017-05-12 05:03:02,956 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:03:02,956 | INFO | financial_words:53 | Tokenize batch: 90
+2017-05-12 05:03:31,028 | INFO | financial_words:79 | Writing to sentiments: 1283
+2017-05-12 05:03:31,336 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:03:31,336 | INFO | financial_words:53 | Tokenize batch: 91
+2017-05-12 05:03:59,024 | INFO | financial_words:79 | Writing to sentiments: 1358
+2017-05-12 05:03:59,329 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:03:59,329 | INFO | financial_words:53 | Tokenize batch: 92
+2017-05-12 05:04:30,726 | INFO | financial_words:79 | Writing to sentiments: 1281
+2017-05-12 05:04:31,016 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:04:31,016 | INFO | financial_words:53 | Tokenize batch: 93
+2017-05-12 05:04:59,512 | INFO | financial_words:79 | Writing to sentiments: 1278
+2017-05-12 05:04:59,795 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:04:59,795 | INFO | financial_words:53 | Tokenize batch: 94
+2017-05-12 05:05:28,181 | INFO | financial_words:79 | Writing to sentiments: 1328
+2017-05-12 05:05:28,461 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:05:28,462 | INFO | financial_words:53 | Tokenize batch: 95
+2017-05-12 05:06:00,542 | INFO | financial_words:79 | Writing to sentiments: 1461
+2017-05-12 05:06:00,855 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:06:00,855 | INFO | financial_words:53 | Tokenize batch: 96
+2017-05-12 05:06:33,997 | INFO | financial_words:79 | Writing to sentiments: 1401
+2017-05-12 05:06:34,328 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:06:34,328 | INFO | financial_words:53 | Tokenize batch: 97
+2017-05-12 05:07:02,836 | INFO | financial_words:79 | Writing to sentiments: 1262
+2017-05-12 05:07:03,130 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:07:03,130 | INFO | financial_words:53 | Tokenize batch: 98
+2017-05-12 05:07:33,566 | INFO | financial_words:79 | Writing to sentiments: 1298
+2017-05-12 05:07:33,854 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:07:33,854 | INFO | financial_words:53 | Tokenize batch: 99
+2017-05-12 05:08:05,475 | INFO | financial_words:79 | Writing to sentiments: 1424
+2017-05-12 05:08:05,776 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:08:05,776 | INFO | financial_words:53 | Tokenize batch: 100
+2017-05-12 05:08:35,412 | INFO | financial_words:79 | Writing to sentiments: 1326
+2017-05-12 05:08:35,717 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:08:35,717 | INFO | financial_words:53 | Tokenize batch: 101
+2017-05-12 05:09:03,892 | INFO | financial_words:79 | Writing to sentiments: 1236
+2017-05-12 05:09:04,196 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:09:04,196 | INFO | financial_words:53 | Tokenize batch: 102
+2017-05-12 05:09:34,592 | INFO | financial_words:79 | Writing to sentiments: 1270
+2017-05-12 05:09:34,884 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:09:34,884 | INFO | financial_words:53 | Tokenize batch: 103
+2017-05-12 05:10:04,018 | INFO | financial_words:79 | Writing to sentiments: 1176
+2017-05-12 05:10:04,384 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:10:04,384 | INFO | financial_words:53 | Tokenize batch: 104
+2017-05-12 05:10:35,835 | INFO | financial_words:79 | Writing to sentiments: 1246
+2017-05-12 05:10:36,165 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:10:36,165 | INFO | financial_words:53 | Tokenize batch: 105
+2017-05-12 05:11:08,106 | INFO | financial_words:79 | Writing to sentiments: 1334
+2017-05-12 05:11:08,430 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:11:08,430 | INFO | financial_words:53 | Tokenize batch: 106
+2017-05-12 05:11:42,753 | INFO | financial_words:79 | Writing to sentiments: 1574
+2017-05-12 05:11:43,126 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:11:43,126 | INFO | financial_words:53 | Tokenize batch: 107
+2017-05-12 05:12:13,546 | INFO | financial_words:79 | Writing to sentiments: 1395
+2017-05-12 05:12:13,864 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:12:13,864 | INFO | financial_words:53 | Tokenize batch: 108
+2017-05-12 05:12:45,493 | INFO | financial_words:79 | Writing to sentiments: 1372
+2017-05-12 05:12:45,858 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:12:45,858 | INFO | financial_words:53 | Tokenize batch: 109
+2017-05-12 05:13:19,919 | INFO | financial_words:79 | Writing to sentiments: 1411
+2017-05-12 05:13:20,235 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:13:20,236 | INFO | financial_words:53 | Tokenize batch: 110
+2017-05-12 05:13:51,813 | INFO | financial_words:79 | Writing to sentiments: 1282
+2017-05-12 05:13:52,125 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:13:52,125 | INFO | financial_words:53 | Tokenize batch: 111
+2017-05-12 05:14:23,105 | INFO | financial_words:79 | Writing to sentiments: 1576
+2017-05-12 05:14:23,451 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:14:23,451 | INFO | financial_words:53 | Tokenize batch: 112
+2017-05-12 05:14:56,495 | INFO | financial_words:79 | Writing to sentiments: 1431
+2017-05-12 05:14:56,808 | INFO | financial_words:85 | Deleted from STAGING: 10000
+2017-05-12 05:14:56,808 | INFO | financial_words:53 | Tokenize batch: 113
+2017-05-12 05:15:12,882 | INFO | financial_words:79 | Writing to sentiments: 713
+2017-05-12 05:15:13,211 | INFO | financial_words:85 | Deleted from STAGING: 4188
+2017-05-12 05:15:13,211 | INFO | financial_words:53 | Tokenize batch: 114

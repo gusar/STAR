@@ -52,9 +52,9 @@ class WordList:
         while True:
             logging.info('Tokenize batch: {}'.format(i))
             batch_df = self.load_clean()
-            original_ids = batch_df[ID_FIELD_DF].tolist()
             if len(batch_df) < 1:
                 break
+            original_ids = batch_df[ID_FIELD_DF].tolist()
             batch_df['tokens'] = batch_df['body'].apply(self.tokenize_text)
             del(batch_df['body'])
             sentiments_df = self.count_pos_neg(batch_df)

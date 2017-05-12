@@ -6,4 +6,5 @@ mongo:
     clean_staging: clean_staging
     clean_archive: clean_archive
     sentiment_words: sentiment_words
-    batch_size: 1000
+    sentiments: sentiments
+    batch_size: 10000

@@ -1,26 +1,29 @@
 import pandas as pd
-from star.config.config_name_map import *
 import logging
 
-from star.config.json_data_columns import WANTED_COLUMNS_WORDS
+from bs4 import BeautifulSoup
+from nltk import tokenize, corpus
+
+from star.config.config_name_map import *
 from star.db.connector import DBConnector
 from star.utils import log, ArgParser
 from star.utils.config_utils import StarConfig
-from star.utils.pandas_utils import filter_unwanted_columns
+
+
+DEFAULT_BATCH_SIZE = 10000
 
 
 class WordList:
-    def __init__(self):
-        self.clean_con = None
-        self.words_con = None
-        self.word_list = None
-
-    def file_to_db(self, db_dict, wordlist_path):
+    def __init__(self, db_dict):
         self.clean_con = db_dict['clean']
         self.words_con = db_dict['words']
+        self.sentiments_con = db_dict['sentiments']
+        self.word_list = None
+        self.batch_limit = DEFAULT_BATCH_SIZE
+
+    def file_to_db(self, wordlist_path):
 
         words_df = pd.read_excel(wordlist_path)
-        words_df = filter_unwanted_columns(words_df, WANTED_COLUMNS_WORDS)
         words_df = words_df[(words_df.Negative != 0)
                             | (words_df.Positive != 0)
                             | (words_df.Uncertainty != 0)]
@@ -29,7 +32,7 @@ class WordList:
         del (words_df['Positive'])
         del (words_df['Uncertainty'])
         words_df.reset_index(drop=True, inplace=True)
-
+        words_df['Word'] = words_df['Word'].str.lower()
         self.write_to_db(words_df)
 
     def write_to_db(self, df):
@@ -40,24 +43,54 @@ class WordList:
         if len(ids_not_archived) > 0:
             self.words_con.insert_df(df[df['Word'].isin(ids_not_archived)])
 
-    def process__batch(self):
+    def determine_sentiments(self, batch_limit):
+        self.word_list = self.load_words()
+        if batch_limit:
+            self.batch_limit = batch_limit
         i = 1
         while True:
-            logging.info('ETL batch: {}'.format(i))
-            batch_df = self.load_staging()
+            logging.info('Tokenize batch: {}'.format(i))
+            batch_df = self.load_clean()
             if len(batch_df) < 1:
                 break
-            self.write_to_db(batch_df, self.archive_con)
-            batch_df = filter_unwanted_columns(batch_df, WANTED_COLUMNS_STOCKTWITS)
-            batch_df = extract_urls(batch_df)
-            batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
-            batch_df = extract_financial_symbols(batch_df)
-            self.write_to_db(batch_df, self.clean_con)
-            self.delete_from_staging(batch_df)
+            batch_df['tokens'] = batch_df['body'].apply(self.tokenize_text)
+            del(batch_df['body'])
+            sentiments_df = self.count_pos_neg(batch_df)
+            self.write_to_db(sentiments_df)
             i += 1
 
-    def load_staging(self):
-        return self.staging_con.find(None, self.batch_limit)
+    def count_pos_neg(self, df):
+        positive = self.word_list[self.word_list['sentiment'] == 1]
+        negative = self.word_list[self.word_list['sentiment'] == -1]
+        undetermined = self.word_list[self.word_list['sentiment'] == 0]
+
+        df['bullish'] = df['tokens'].apply(lambda x: len(set(x).intersection(set(positive['Word']))))
+        df['bearish'] = df['tokens'].apply(lambda x: len(set(x).intersection(set(negative['Word']))))
+        df['undetermined'] = df['tokens'].apply(lambda x: len(set(x).intersection(set(undetermined['Word']))))
+        df = df[(df['bullish'] != 0) | (df['bearish'] != 0) | (df['undetermined'] != 0)]
+        df.reset_index(drop=True)
+        df['sentiment'] = df.apply(lambda x: sentiment(x['bullish'], x['bearish']), axis=1)
+        return df
+
+    def write_sentiments(self, df):
+        logging.info('Writing to {}: {}'.format(self.sentiments_con.collection_name, str(len(df))))
+        self.sentiments_con.insert_df(df)
+
+    def load_clean(self):
+        df = self.clean_con.find(None, self.batch_limit)
+        return df
+
+    def load_words(self):
+        return self.words_con.find(None)
+
+    @staticmethod
+    def tokenize_text(body):
+        body = body.lower()
+        body = BeautifulSoup(body, "html.parser").get_text()
+
+        tokenizer = tokenize.RegexpTokenizer(r'\w+')
+        body = tokenizer.tokenize(body)
+        return [word for word in body if word not in corpus.stopwords.words('english')]
 
 
 def sentiment(n, p):
@@ -74,8 +107,10 @@ def create_db_connectors(config):
     _db = config[DB_TYPE][DB_NAME]
     _clean = config[DB_TYPE][CLEAN_STAGING]
     _words = config[DB_TYPE][SENTIMENT_WORDS]
+    _sentiments = config[DB_TYPE[SENTIMENTS]]
     return {'words': DBConnector(DB_TYPE, _uri, _db, _words),
-            'clean': DBConnector(DB_TYPE, _uri, _db, _clean)}
+            'clean': DBConnector(DB_TYPE, _uri, _db, _clean),
+            'sentiments': DBConnector(DB_TYPE, _uri, _db, _sentiments)}
 
 
 def parse_args():
@@ -105,7 +140,9 @@ def main():
         config = get_config_values(args.config)
 
         db_connector_dict = create_db_connectors(config)
-        WordList().file_to_db(db_connector_dict, args.path)
+        wl = WordList(db_connector_dict)
+        # wl.file_to_db(args.path)
+        wl.determine_sentiments(1000)
 
     except (KeyboardInterrupt, SystemExit):
         pass

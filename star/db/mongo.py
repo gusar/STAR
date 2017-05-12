@@ -39,6 +39,8 @@ class Mongo(object):
         Insert documents into pre-defined collection
         :param df: dict or iterable
         """
+        if '_id_$oid' in df.columns:
+            del (df['_id_$oid'])
         if self._collection:
             self._collection.insert(df.to_dict('records'))
         else:

@@ -6,8 +6,7 @@ from star.db.connector import DBConnector
 from star.utils.arg_parser import ArgParser
 from star.utils.config_utils import StarConfig
 from star.config.config_name_map import *
-from star.utils.pandas_utils import (filter_unwanted_columns, extract_urls, parse_datetime_str_to_datetime64,
-                                     extract_financial_symbols)
+from star.utils.pandas_utils import extract_urls, parse_datetime_str_to_datetime64, extract_financial_symbols
 from star.config.json_data_columns import *
 
 DEFAULT_BATCH_SIZE = 10000
@@ -30,16 +29,19 @@ class ETLControl(object):
         while True:
             logging.info('ETL batch: {}'.format(i))
             batch_df = self.load_staging()
+            logging.info('Loaded: {}'.format(len(batch_df)))
             if len(batch_df) < 1:
                 break
+            original_ids = batch_df[ID_FIELD_DF].tolist()
             # self.write_to_db(batch_df, self.archive_con)
             batch_df = batch_df[WANTED_COLUMNS_STOCKTWITS]
             batch_df = extract_financial_symbols(batch_df)
             batch_df = batch_df[batch_df['body_symbols'].notnull()]
             batch_df = extract_urls(batch_df)
             batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
+            del(batch_df[ID_FIELD_DF])
             self.write_to_db(batch_df, self.clean_con)
-            self.delete_from_staging(batch_df)
+            self.delete_from_staging(original_ids)
             i += 1
 
     def load_staging(self):
@@ -53,8 +55,7 @@ class ETLControl(object):
         if len(ids_not_archived) > 0:
             con.insert_df(df[df[self.id_field_df].isin(ids_not_archived)])
 
-    def delete_from_staging(self, df):
-        df_ids = df[self.id_field_df].tolist()
+    def delete_from_staging(self, df_ids):
         removed_result = self.staging_con.delete_by_id_in(df_ids)
         if hasattr(removed_result, 'deleted_count'):
             logging.info('Deleted from STAGING: {}'.format(removed_result.deleted_count))

@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from nltk import tokenize, corpus
 
 from star.config.config_name_map import *
+from star.config.json_data_columns import ID_FIELD_DF
 from star.db.connector import DBConnector
 from star.utils import log, ArgParser
 from star.utils.config_utils import StarConfig
@@ -51,12 +52,14 @@ class WordList:
         while True:
             logging.info('Tokenize batch: {}'.format(i))
             batch_df = self.load_clean()
+            original_ids = batch_df[ID_FIELD_DF].tolist()
             if len(batch_df) < 1:
                 break
             batch_df['tokens'] = batch_df['body'].apply(self.tokenize_text)
             del(batch_df['body'])
             sentiments_df = self.count_pos_neg(batch_df)
-            self.write_to_db(sentiments_df)
+            self.write_sentiments(sentiments_df)
+            self.delete_from_staging(original_ids)
             i += 1
 
     def count_pos_neg(self, df):
@@ -75,6 +78,13 @@ class WordList:
     def write_sentiments(self, df):
         logging.info('Writing to {}: {}'.format(self.sentiments_con.collection_name, str(len(df))))
         self.sentiments_con.insert_df(df)
+
+    def delete_from_staging(self, df_ids):
+        removed_result = self.clean_con.delete_by_id_in(df_ids)
+        if hasattr(removed_result, 'deleted_count'):
+            logging.info('Deleted from STAGING: {}'.format(removed_result.deleted_count))
+        else:
+            logging.info('Deleted from STAGING: count not found')
 
     def load_clean(self):
         df = self.clean_con.find(None, self.batch_limit)
@@ -107,7 +117,7 @@ def create_db_connectors(config):
     _db = config[DB_TYPE][DB_NAME]
     _clean = config[DB_TYPE][CLEAN_STAGING]
     _words = config[DB_TYPE][SENTIMENT_WORDS]
-    _sentiments = config[DB_TYPE[SENTIMENTS]]
+    _sentiments = config[DB_TYPE][SENTIMENTS]
     return {'words': DBConnector(DB_TYPE, _uri, _db, _words),
             'clean': DBConnector(DB_TYPE, _uri, _db, _clean),
             'sentiments': DBConnector(DB_TYPE, _uri, _db, _sentiments)}
@@ -127,7 +137,7 @@ def get_config_values(config_path):
 def main():
     try:
         log.setup_logger()
-        logging.info('Loading financial words')
+        logging.info('Sentiment analysis')
         if __debug__:
             pd.set_option('compute.use_bottleneck', True)
             pd.set_option('compute.use_numexpr', True)
@@ -142,7 +152,7 @@ def main():
         db_connector_dict = create_db_connectors(config)
         wl = WordList(db_connector_dict)
         # wl.file_to_db(args.path)
-        wl.determine_sentiments(1000)
+        wl.determine_sentiments(config[DB_TYPE][BATCH_SIZE])
 
     except (KeyboardInterrupt, SystemExit):
         pass

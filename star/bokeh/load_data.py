@@ -19,10 +19,14 @@ def load_sentiment_data(tickers, from_date, to_date, db):
     sentiments['body_symbols'] = sentiments['body_symbols'].apply(lambda x: [y.replace('$', '') for y in x])
     sentiments['mask'] = sentiments['body_symbols'].apply(lambda x: True if set(x).intersection(tickers) else None)
     sentiments = sentiments[sentiments['mask'].notnull()]
+    sentiments = sentiments.set_index(pd.DatetimeIndex(sentiments['Date']))
+    sentiments = sentiments.groupby(pd.Grouper(key='Date', freq='1d')).agg(sum)
+    sentiments.dropna().reset_index(drop=True)
 
     yf = YahooFinance(tickers, '2014-12-01', '2015-01-01')
     history = yf.request_historical()[tickers[0]]
     history['Date'] = pd.to_datetime(history['Date'])
+    history['Close'] = history['Close'].apply(float)
     return sentiments, history
 
 
@@ -48,8 +52,8 @@ def main():
             pd.set_option('display.max_colwidth', 1500)
 
         config = get_config_values("/home/andy/PycharmProjects/STAR/star/config/star.yml")
-        db_connector_dict = create_db_connectors(config)
-        # load_sentiment_data(tickers, from_date, to_date, db_connector_dict)
+        db_con = create_db_connectors(config)
+        load_sentiment_data(['JNUG'], iso8601.parse_date('2014-12-01'), iso8601.parse_date('2015-01-01'), db_con)
 
     except (KeyboardInterrupt, SystemExit):
         pass

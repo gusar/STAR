@@ -11,7 +11,6 @@ from star.yahoo_finance.yql_tools import YahooFinance
 
 
 def load_sentiment_data(tickers, from_date, to_date, db):
-    tickers = ['JNUG']
     sentiments_con = db['sentiments']
     sentiments = sentiments_con.find_between_dates(from_date, to_date, DATE_FIELD)
     sentiments['Date'] = pd.to_datetime(sentiments['object_postedTime_$date'], unit='ms')
@@ -23,7 +22,7 @@ def load_sentiment_data(tickers, from_date, to_date, db):
     sentiments = sentiments.groupby(pd.Grouper(key='Date', freq='1d')).agg(sum)
     sentiments.dropna().reset_index(drop=True)
 
-    yf = YahooFinance(tickers, '2014-12-01', '2015-01-01')
+    yf = YahooFinance(tickers, from_date, to_date)
     history = yf.request_historical()[tickers[0]]
     history['Date'] = pd.to_datetime(history['Date'])
     history['Close'] = history['Close'].apply(float)
@@ -53,7 +52,7 @@ def main():
 
         config = get_config_values("/home/andy/PycharmProjects/STAR/star/config/star.yml")
         db_con = create_db_connectors(config)
-        load_sentiment_data(['JNUG'], iso8601.parse_date('2014-12-01'), iso8601.parse_date('2015-01-01'), db_con)
+        load_sentiment_data(['IBM'], iso8601.parse_date('2014-12-01'), iso8601.parse_date('2015-01-01'), db_con)
 
     except (KeyboardInterrupt, SystemExit):
         pass

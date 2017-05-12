@@ -51,3 +51,20 @@ class ArgParser:
         self._arg_parser.add_argument('-p', '--path',
                                       required=is_required,
                                       help='Argument for a path')
+
+    def new_word_list(self, is_required=False):
+        self._arg_parser.add_argument('-wl', '--word_list',
+                                      required=is_required,
+                                      help='Path to a word list')
+
+    def add_clean(self, is_required=False):
+        self._arg_parser.add_argument('-c', '--clean',
+                                      action='store_true',
+                                      required=is_required,
+                                      help='Path to a word list')
+
+    def add_analyse(self, is_required=False):
+        self._arg_parser.add_argument('-A', '--analyse',
+                                      action='store_true',
+                                      required=is_required,
+                                      help='Path to a word list')

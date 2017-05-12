@@ -1,9 +1,9 @@
-import pandas as pd
 import iso8601
 
 from bokeh.io import curdoc, show
 from bokeh.layouts import row
-from bokeh.models import Range1d, DatetimeTickFormatter, LinearAxis, HoverTool
+from bokeh.models import Range1d, DatetimeTickFormatter, LinearAxis, HoverTool, BoxSelectTool, BoxZoomTool, \
+    CrosshairTool, ResizeTool, ResetTool
 from bokeh.plotting import figure
 
 from star.bokeh.load_data import load_sentiment_data
@@ -13,16 +13,14 @@ from star.utils.config_utils import StarConfig
 
 
 def create_graph(sentiments, history, ticker):
-    hover = HoverTool(
-        tooltips=[
-            ("Date", "$index"),
-            ("Cumulative sentiment", "$y")
-        ]
-    )
+    tools = [HoverTool(
+        tooltips=[("Date", "$index"),
+                  ("Cumulative sentiment", "$y")]),
+        BoxSelectTool(), BoxZoomTool(), CrosshairTool(), ResizeTool(), ResetTool()]
 
     _plot = figure(title="Twitter Sentiment vs Market Close values", plot_width=1600, plot_height=800,
-                   x_axis_type="datetime", tools=[hover])
-    _plot.y_range = Range1d(0, history.Close.max() + 10)
+                   x_axis_type="datetime", tools=tools, toolbar_location="above")
+    _plot.y_range = Range1d(history.Close.min() - 5, history.Close.max() + 5)
     _plot.xaxis.axis_label = "Date"
     _plot.yaxis.axis_label = "Close Price"
     _plot.xaxis.formatter = DatetimeTickFormatter(
@@ -31,7 +29,7 @@ def create_graph(sentiments, history, ticker):
         months=["%d %B %Y"],
         years=["%d %B %Y"],
     )
-    _plot.extra_y_ranges = {"sentiment": Range1d(start=-2, end=110)}
+    _plot.extra_y_ranges = {"sentiment": Range1d(start=sentiments.undetermined.min()-2, end=sentiments.bearish.max()+5)}
 
     _plot.line(x=history.Date, y=history.Close, legend=ticker, line_color='blue', line_width=2)
     _plot.circle(x=history.Date, y=history.Close, fill_color="white", line_color="blue", size=6)
@@ -69,8 +67,8 @@ def get_config_values(config_path):
 
 config = get_config_values("/home/andy/PycharmProjects/STAR/star/config/star.yml")
 db_con = create_db_connectors(config)
-s, h = load_sentiment_data(['JNUG'], iso8601.parse_date('2014-12-01'), iso8601.parse_date('2015-01-01'), db_con)
-plot = create_graph(s, h, 'JNUG')
+s, h = load_sentiment_data(['AAPL'], iso8601.parse_date('2015-07-01'), iso8601.parse_date('2015-07-30'), db_con)
+plot = create_graph(s, h, 'AAPL')
 show(plot)
 
 curdoc().add_root(row(plot))

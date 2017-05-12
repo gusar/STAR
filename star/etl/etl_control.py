@@ -39,7 +39,7 @@ class ETLControl(object):
             batch_df = batch_df[batch_df['body_symbols'].notnull()]
             batch_df = extract_urls(batch_df)
             batch_df = parse_datetime_str_to_datetime64(batch_df, DATE_FIELD)
-            del(batch_df[ID_FIELD_DF])
+            # del(batch_df[ID_FIELD_DF])
             self.write_to_db(batch_df, self.clean_con)
             self.delete_from_staging(original_ids)
             i += 1
@@ -48,12 +48,14 @@ class ETLControl(object):
         return self.staging_con.find(None, self.batch_limit)
 
     def write_to_db(self, df, con):
-        df_ids = df[self.id_field_df].tolist()
-        matching_ids = con.find_distinct_list(df_ids, self.id_field_df)
-        ids_not_archived = list(set(df_ids) - set(matching_ids))
-        logging.info('Writing to {}: {}'.format(con.collection_name, str(len(ids_not_archived))))
-        if len(ids_not_archived) > 0:
-            con.insert_df(df[df[self.id_field_df].isin(ids_not_archived)])
+        if self.id_field_df in df.columns:
+            df_ids = df[self.id_field_df].tolist()
+            matching_ids = con.find_distinct_list(df_ids, self.id_field_df)
+            ids_not_archived = list(set(df_ids) - set(matching_ids))
+            logging.info('Writing to {}: {}'.format(con.collection_name, str(len(ids_not_archived))))
+            if len(ids_not_archived) < 1:
+                return con.insert_df(df[df[self.id_field_df].isin(ids_not_archived)])
+        con.insert_df(df)
 
     def delete_from_staging(self, df_ids):
         removed_result = self.staging_con.delete_by_id_in(df_ids)
@@ -82,30 +84,3 @@ def create_db_connectors(config):
     return {'staging': DBConnector(DB_TYPE, _uri, _db, _staging),
             'clean': DBConnector(DB_TYPE, _uri, _db, _clean),
             'archive': DBConnector(DB_TYPE, _uri, _db, _archive)}
-
-
-def main():
-    try:
-        log.setup_logger()
-        logging.info('Cleaning raw STAGING to CLEAN')
-        if __debug__:
-            pd.set_option('compute.use_bottleneck', True)
-            pd.set_option('compute.use_numexpr', True)
-            pd.set_option('display.width', 10000)
-            pd.set_option('display.max_columns', 50)
-            pd.set_option('display.expand_frame_repr', True)
-            pd.set_option('display.max_colwidth', 1500)
-
-        args = parse_args()
-        config = get_config_values(args.config)
-
-        db_connector_dict = create_db_connectors(config)
-        etl = ETLControl(db_connector_dict, config[DB_TYPE][BATCH_SIZE])
-        etl.clean_batch()
-
-    except (KeyboardInterrupt, SystemExit):
-        pass
-
-
-if __name__ == '__main__':
-    main()
